@@ -76,7 +76,7 @@ app.post("/scrape", async (req, res) => {
     const data = await scrapeInstagram(profile);
     res.json(data);
   } catch (error) {
-    res.status(500).json({ error: "Failed to scrape profile", details: error.message });
+    res.status(402).json({ error: "Failed to scrape profile", details: error.message });
   }
 });
 
