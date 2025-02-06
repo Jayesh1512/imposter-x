@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
-import puppeteer from "puppeteer-extra";
+import puppeteer from "puppeteer-core";
+import chromium from "chrome-aws-lambda";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import * as cheerio from "cheerio";
 import fs from "fs";
@@ -18,9 +19,15 @@ app.use(cors());
 app.use(express.json());
 
 const scrapeInstagram = async (profileUrl) => {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    executablePath: await chromium.executablePath,
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
+    headless: chromium.headless,
+  });
+  
   const page = await browser.newPage();
-
+  
   await page.setUserAgent(
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
   );
@@ -59,15 +66,13 @@ const scrapeInstagram = async (profileUrl) => {
   return { followers: followers || "Not Found", following: following || "Not Found" };
 };
 
-app.get('/scrape' , async(req,res) =>{
-  res.json({
-    body:"Hello World"
-  })
-})
+app.get('/scrape', async (req, res) => {
+  res.json({ body: "Hello World" });
+});
 
 // POST endpoint to scrape Instagram profile
 app.post("/scrape", async (req, res) => {
-  const { profile } = req.body; // Accept profile URL from request body
+  const { profile } = req.body;
   if (!profile) {
     return res.status(400).json({ error: "Profile URL is required" });
   }
