@@ -21,8 +21,9 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "nodemon": "^3.1.9",
+    "pkg": "^5.8.1",
     "puppeteer": "^24.2.0",
-    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra": "*",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
     "puppeteer-extra-plugin-user-preferences": "^2.4.1",
     "selenium-webdriver": "^4.28.1"
