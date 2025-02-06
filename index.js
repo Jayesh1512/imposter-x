@@ -1,12 +1,12 @@
 import express from "express";
 import cors from "cors";
-import puppeteer from "puppeteer-core";
+import puppeteer from "puppeteer-extra";
 import chromium from "chrome-aws-lambda";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import * as cheerio from "cheerio";
 import fs from "fs";
 
-puppeteer.use(StealthPlugin());
+puppeteer.use(StealthPlugin()); // Ensure puppeteer-extra is used here
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -25,9 +25,9 @@ const scrapeInstagram = async (profileUrl) => {
     defaultViewport: chromium.defaultViewport,
     headless: chromium.headless,
   });
-  
+
   const page = await browser.newPage();
-  
+
   await page.setUserAgent(
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
   );
@@ -58,7 +58,7 @@ const scrapeInstagram = async (profileUrl) => {
 
   const htmlContent = await page.content();
   const $ = cheerio.load(htmlContent);
-  
+
   let followers = $("a[href$='/followers/'] > span").text().trim();
   let following = $("a[href$='/following/'] > span").text().trim();
 
@@ -66,7 +66,7 @@ const scrapeInstagram = async (profileUrl) => {
   return { followers: followers || "Not Found", following: following || "Not Found" };
 };
 
-app.get('/scrape', async (req, res) => {
+app.get("/scrape", async (req, res) => {
   res.json({ body: "Hello World" });
 });
 
