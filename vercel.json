@@ -11,5 +11,13 @@
         "src": "/(.*)",
         "dest": "index.js"
       }
-    ]
+    ],
+    "functions": {
+      "index.js": {
+        "includeFiles": [
+          "node_modules/puppeteer-extra/**",
+          "node_modules/puppeteer-extra-plugin-stealth/**"
+        ]
+      }
+    }
 }
