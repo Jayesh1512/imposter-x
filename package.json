@@ -28,6 +28,9 @@
     "selenium-webdriver": "^4.28.1"
   },
   "peerDependencies": {
-  "puppeteer-extra": "*"
-}
+    "puppeteer-extra": "*"
+  },
+  "pkg": {
+    "assets": "node_modules/puppeteer-extra-plugin-user-preferences/**/*.*"
+  }
 }
