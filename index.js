@@ -59,6 +59,12 @@ const scrapeInstagram = async (profileUrl) => {
   return { followers: followers || "Not Found", following: following || "Not Found" };
 };
 
+app.get('/scrape' , async(req,res) =>{
+  res.json({
+    body:"Hello World"
+  })
+})
+
 // POST endpoint to scrape Instagram profile
 app.post("/scrape", async (req, res) => {
   const { profile } = req.body; // Accept profile URL from request body
